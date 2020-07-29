@@ -12,12 +12,12 @@ class TasksController extends Controller
     }
 
     public function store(Request $request){
-        return Task::create($request->all);
+        return Task::create($request->all());
     }
 
     public function update(Request $request, $id){
         $task = Task::findOrFail($id);
-        $task->update($request->all);
+        $task->update($request->all());
     }
 
     public function delete($id){

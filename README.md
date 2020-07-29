@@ -15,3 +15,6 @@
 14) Install react router (npm i --save reactstrap react react-dom)
 15) npm run dev   (for compile new changes)
 16) php artisan make:controller TasksController
+17) code functions in controller file
+18) create routes in api.php
+19) go to the postman and fill data through get and post, and in body use x-www-form-urlencoded when     created new data
