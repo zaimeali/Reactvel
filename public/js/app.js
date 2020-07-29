@@ -79982,6 +79982,16 @@ function Example() {
   var titleBox = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createRef"])();
   var descBox = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createRef"])();
 
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      editTask = _useState10[0],
+      setEditTask = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState12 = _slicedToArray(_useState11, 2),
+      selectId = _useState12[0],
+      setSelectId = _useState12[1];
+
   function loadTask() {
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('http://127.0.0.1:8000/api/tasks').then(function (res) {
       setTasks(res.data);
@@ -79990,6 +80000,10 @@ function Example() {
 
   function toggleNewModalTask() {
     setNewTask(!newTask);
+  }
+
+  function toggleEditModalTask() {
+    setEditTask(!editTask);
   }
 
   function addTask() {
@@ -80005,6 +80019,49 @@ function Example() {
     descBox.current.value = "";
     loadTask();
     toggleNewModalTask();
+  }
+
+  function deleteTask(e) {
+    var id = e.target.id;
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("http://127.0.0.1:8000/api/task/".concat(id));
+    loadTask();
+  }
+
+  function updateTask(e) {
+    var id = e.target.id;
+    setSelectId(id); // console.log(id);
+
+    var name = '';
+    var description = '';
+    tasks.forEach(function (task) {
+      if (task.id == id) {
+        // console.log(task.id);
+        name = task.name;
+        description = task.description;
+      } // console.log(task.id);
+
+    }); // console.log(name, description);
+
+    setTitle(name);
+    setDesc(description);
+    toggleEditModalTask();
+  }
+
+  function editSelectTask() {
+    axios__WEBPACK_IMPORTED_MODULE_3___default()({
+      method: 'put',
+      url: "http://127.0.0.1:8000/api/task/".concat(selectId),
+      data: {
+        name: title,
+        description: desc
+      }
+    });
+    setTitle('');
+    setDesc('');
+    titleBox.current.value = "";
+    descBox.current.value = "";
+    loadTask();
+    toggleEditModalTask();
   } // function handleChange(e){
   //     [e.target.name] = e.target.value;
   // }
@@ -80037,7 +80094,6 @@ function Example() {
     ref: titleBox,
     className: "form-control",
     type: "text",
-    value: title,
     placeholder: "Enter Task Title",
     onChange: function onChange(e) {
       return setTitle(e.target.value);
@@ -80053,18 +80109,60 @@ function Example() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
     color: "success",
     onClick: addTask
-  }, "Add Task"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Table"], {
+  }, "Add Task"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+    isOpen: editTask,
+    className: ""
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "ml-auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    className: "rounded-circle mx-0",
+    color: "danger",
+    onClick: toggleEditModalTask
+  }, "X"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], {
+    className: ""
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    ref: titleBox,
+    id: "editTitleBox",
+    value: title,
+    className: "form-control",
+    type: "text",
+    onChange: function onChange(e) {
+      return setTitle(e.target.value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    ref: descBox,
+    id: "editDescBox",
+    value: desc,
+    className: "form-control mt-2",
+    type: "text",
+    onChange: function onChange(e) {
+      return setDesc(e.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    color: "success",
+    onClick: editSelectTask
+  }, "Edit Task"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Table"], {
     className: ""
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Actions"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, tasks.map(function (task) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
       key: task.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, task.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      id: "".concat(task.id),
       color: "success",
       size: "sm",
+      onClick: function onClick(e) {
+        return updateTask(e);
+      },
       className: "mr-2"
     }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      id: "".concat(task.id),
       color: "danger",
-      size: "sm"
+      size: "sm",
+      onClick: function onClick(e) {
+        return deleteTask(e);
+      }
     }, "Delete")));
   }))));
 }
