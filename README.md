@@ -8,3 +8,6 @@
 7) no need to put db_socket bcz of windows OS
 8) import schema in AppServiceProvider and use in boot function
 9) php artisan make:migration create_tasks_table
+10) define fields in a new migrated file
+11) php artisan migrate
+12) php artisan make:model Task
