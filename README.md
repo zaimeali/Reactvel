@@ -11,3 +11,5 @@
 10) define fields in a new migrated file
 11) php artisan migrate
 12) php artisan make:model Task
+13) write fields which are fillable in a model Task
+14) Install react router (npm i --save reactstrap react react-dom)
