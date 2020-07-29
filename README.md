@@ -18,3 +18,4 @@
 17) code functions in controller file
 18) create routes in api.php
 19) go to the postman and fill data through get and post, and in body use x-www-form-urlencoded when     created new data
+20) Install axios through npm (npm i axios --save)
