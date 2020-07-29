@@ -14,3 +14,4 @@
 13) write fields which are fillable in a model Task
 14) Install react router (npm i --save reactstrap react react-dom)
 15) npm run dev   (for compile new changes)
+16) php artisan make:controller TasksController
